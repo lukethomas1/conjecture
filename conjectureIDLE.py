@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Recursive function based on Collatz conjecture
 def operation(index, tries):
     result = 0
@@ -17,21 +19,27 @@ def operation(index, tries):
 # End operation
 
 
-min = 0;
-max = 0;
+minimum = 0;
+maximum = 0;
 
-while min <= 0 and min >= max:
+while minimum <= 0:
     # Prompt user for input
-    input = input("Enter a range to test the conjecture. (Ex. '1 5'): ")
+    rangeInput = input("Enter a positive range to test the conjecture. (Ex. '1 5'): ")
 
     # Get range to test
-    min = int(input[0 : input.find(" ")])
-    max = int(input[input.find(" "):])
+    minimum = int(rangeInput[0 : rangeInput.find(" ")])
+    maximum = int(rangeInput[rangeInput.find(" "):])
+
+    # Reverse minimum and maximum if necessary
+    if(minimum > maximum):
+        temp = minimum
+        minimum = maximum
+        maximum = temp
 
 triesDict = {}
 
 # Run recursive conjecture
-for index in range(min, max + 1):
+for index in range(minimum, maximum + 1):
     tries = operation(index, 0)
     print("The number, {}, worked after {} tries".format
           (int(index), tries))
@@ -39,15 +47,19 @@ for index in range(min, max + 1):
         triesDict[tries] += 1
     else:
         triesDict[tries] = 1
-# End for
 
 print()
 lastnum = 0
-sorted(triesDict)
 
-for num in triesDict:
+# Print the sorted dictionary
+for num in sorted(triesDict):
     if(lastnum != num - 1):
         print("-------------------------------------------------")
     print("The amount of times it took {} tries is {}".format
           (num, triesDict[num]))
     lastnum = num
+
+# End program after user is done with output
+print()
+end = input("Press Enter to quit.")
+print()
